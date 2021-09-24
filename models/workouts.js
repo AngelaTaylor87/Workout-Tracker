@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const transactionSchema = new Schema({
+const workoutsSchema = new Schema({
   name: {
     type: String,
     trim: true,
-    required: "Enter a name for transaction"
+    required: "Enter a name for workouts"
   },
   value: {
     type: Number,
@@ -18,6 +18,6 @@ const transactionSchema = new Schema({
   }
 });
 
-const Transaction = mongoose.model("Transaction", transactionSchema);
+const Workout = mongoose.model("Workout", workoutsSchema);
 
-module.exports = Transaction;
+module.exports = Workout;
