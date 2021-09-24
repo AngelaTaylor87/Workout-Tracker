@@ -11,6 +11,19 @@ router.post("/api/workouts", ({ body }, res) => {
     });
 });
 
+router.get('/api/workouts/range', ({ body, params}, res) => {
+  const filter = { id: params.id };
+  Workout.findOneAndUpdate(filter, body, {
+    new: true
+  })
+  .then(dbWorkout => {
+    res.json(dbWorkout)
+      })
+      .catch(err => {
+    res.status(400).json(err)
+      })
+})
+
 router.put('/api/workouts/:id', ({ body, params}, res) => {
   const filter = { id: params.id };
 
@@ -26,10 +39,6 @@ res.json(dbWorkout)
   .catch(err => {
 res.status(400).json(err)
   })
-
-
-
-
 });
 
 router.post("/api/workouts/bulk", ({ body }, res) => {
