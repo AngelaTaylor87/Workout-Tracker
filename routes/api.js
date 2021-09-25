@@ -11,12 +11,17 @@ router.post("/api/workouts", ({ body }, res) => {
     });
 });
 
-router.get('/api/workouts/range', ({ body, params}, res) => {
-  const filter = { id: params.id };
-  Workout.findOneAndUpdate(filter, body, {
-    new: true
-  })
+router.get('/api/workouts/range', ({ body }, res) => {
+  
+  Workout.aggregate([{
+    $addFields: {
+      totalDuration: {
+        $sum: '$exercises.duration'
+      }
+    }
+  }])
   .then(dbWorkout => {
+    console.log(dbWorkout)
 res.json(dbWorkout)
   })
   .catch(err => {
@@ -52,8 +57,13 @@ router.post("/api/workouts/bulk", ({ body }, res) => {
 });
 
 router.get("/api/workouts", (req, res) => {
-  Workout.find({})
-    .sort({ date: -1 })
+  Workout.aggregate([{
+    $addFields: {
+      totalDuration: {
+        $sum: '$exercises.duration'
+      }
+    }
+  }])
     .then(dbWorkout => {
       res.json(dbWorkout);
     })
