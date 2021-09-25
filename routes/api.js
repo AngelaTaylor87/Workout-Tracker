@@ -17,11 +17,11 @@ router.get('/api/workouts/range', ({ body, params}, res) => {
     new: true
   })
   .then(dbWorkout => {
-    res.json(dbWorkout)
-      })
-      .catch(err => {
-    res.status(400).json(err)
-      })
+res.json(dbWorkout)
+  })
+  .catch(err => {
+res.status(400).json(err)
+  })
 })
 
 router.put('/api/workouts/:id', ({ body, params}, res) => {
